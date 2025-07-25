@@ -322,30 +322,7 @@ export function mergeTemplates(templates, contents) {
     });
   });
   
-  // Add merged front-matter information as a comment if any exists
-  let frontMatterSummary = '';
-  if (collectedFrontMatter.length > 0) {
-    const descriptions = collectedFrontMatter
-      .filter(fm => fm.description)
-      .map(fm => fm.description);
-    
-    const allAppliesTo = collectedFrontMatter
-      .filter(fm => fm.appliesTo && fm.appliesTo.length > 0)
-      .flatMap(fm => fm.appliesTo);
-    
-    const uniqueAppliesTo = [...new Set(allAppliesTo)];
-    
-    if (descriptions.length > 0 || uniqueAppliesTo.length > 0) {
-      frontMatterSummary = '\n<!--\nMerged template information:\n';
-      if (descriptions.length > 0) {
-        frontMatterSummary += `Descriptions: ${descriptions.join('; ')}\n`;
-      }
-      if (uniqueAppliesTo.length > 0) {
-        frontMatterSummary += `Applies to: ${uniqueAppliesTo.join(', ')}\n`;
-      }
-      frontMatterSummary += '-->\n';
-    }
-  }
+
   
   // Convert sections back to markdown
   const mergedContent = allSections
@@ -357,8 +334,8 @@ export function mergeTemplates(templates, contents) {
     .replace(/\n{4,}/g, '\n\n\n')
     .trim();
   
-  // Return content with minimal footer information
-  return cleanedContent + frontMatterSummary;
+  // Return content without any footer information
+  return cleanedContent;
 }
 
 /**
