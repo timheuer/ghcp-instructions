@@ -33,6 +33,60 @@ ${templates.map(t => `- **${t.name}** (${t.fileName})`).join('\n')}
 }
 
 /**
+ * Parse YAML front-matter from content
+ * @param {string} content - Markdown content to parse
+ * @returns {Object} Object with frontMatter and contentWithoutFrontMatter
+ */
+function parseFrontMatter(content) {
+  const lines = content.split('\n');
+  let frontMatter = null;
+  let contentStart = 0;
+  
+  // Check if content starts with front-matter
+  if (lines[0] && lines[0].trim() === '---') {
+    let frontMatterEnd = -1;
+    for (let i = 1; i < lines.length; i++) {
+      if (lines[i] && lines[i].trim() === '---') {
+        frontMatterEnd = i;
+        break;
+      }
+    }
+    
+    if (frontMatterEnd > 0) {
+      const frontMatterLines = lines.slice(1, frontMatterEnd);
+      frontMatter = {};
+      
+      // Simple YAML parsing for description and appliesTo
+      for (const line of frontMatterLines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('description:')) {
+          const value = trimmed.substring('description:'.length).trim();
+          frontMatter.description = value.replace(/^["']|["']$/g, ''); // Remove quotes
+        } else if (trimmed.startsWith('appliesTo:')) {
+          const value = trimmed.substring('appliesTo:'.length).trim();
+          if (value.startsWith('[') && value.endsWith(']')) {
+            // Parse array format
+            const arrayContent = value.slice(1, -1);
+            frontMatter.appliesTo = arrayContent.split(',').map(item => 
+              item.trim().replace(/^["']|["']$/g, '')
+            ).filter(item => item.length > 0);
+          }
+        }
+      }
+      
+      contentStart = frontMatterEnd + 1;
+    }
+  }
+  
+  const contentWithoutFrontMatter = lines.slice(contentStart).join('\n');
+  
+  return {
+    frontMatter,
+    contentWithoutFrontMatter
+  };
+}
+
+/**
  * Parse markdown content into sections
  * @param {string} content - Markdown content to parse
  * @returns {Array} Array of section objects with title, level, and content
@@ -63,7 +117,7 @@ function parseMarkdownSections(content) {
       // Add line to current section
       currentSection.content.push(line);
     } else {
-      // Content before first header
+      // Content before first header (skip front-matter processing here)
       if (line.trim()) {
         if (!sections.find(s => s.title === 'Preamble')) {
           sections.push({
@@ -155,7 +209,7 @@ function isDuplicateSection(section, existingSections) {
       );
       
       if (uniqueLines.length > 1) { // More than just the header
-        similarSection.content = [...similarSection.content, '', '<!-- Merged content -->', ...uniqueLines.slice(1)];
+        similarSection.content = [...similarSection.content, ...uniqueLines.slice(1)];
       }
       
       return true; // Mark as duplicate since we merged it
@@ -211,14 +265,14 @@ export function mergeTemplates(templates, contents) {
     throw new Error('Templates and contents arrays must have the same length');
   }
   
-  const header = generateHeader(templates);
   const allSections = [];
+  const collectedFrontMatter = [];
   
   // Add main title section at the top
   allSections.push({
     level: 1,
     title: 'Copilot Instructions',
-    content: ['# Copilot Instructions', '', 'This file contains merged instructions from multiple templates to provide comprehensive guidance for GitHub Copilot.', ''],
+    content: ['# Copilot Instructions', '', '', ''],
     hash: 'copilot-instructions',
     isMainTitle: true
   });
@@ -228,13 +282,25 @@ export function mergeTemplates(templates, contents) {
     const template = templates[index];
     console.log(`Processing template: ${template.name}`);
     
-    const sections = parseMarkdownSections(content);
+    // Parse front-matter from content
+    const { frontMatter, contentWithoutFrontMatter } = parseFrontMatter(content);
+    
+    // Collect front-matter for potential merging
+    if (frontMatter) {
+      collectedFrontMatter.push({
+        template: template.name,
+        ...frontMatter
+      });
+    }
+    
+    // Parse sections from content without front-matter
+    const sections = parseMarkdownSections(contentWithoutFrontMatter);
     
     // Add template header
     allSections.push({
       level: 2,
       title: `Instructions from: ${template.name}`,
-      content: [`## Instructions from: ${template.name}`, ''],
+      content: [''],
       hash: `instructions-from-${template.name.toLowerCase()}`,
       isTemplateHeader: true
     });
@@ -256,6 +322,8 @@ export function mergeTemplates(templates, contents) {
     });
   });
   
+
+  
   // Convert sections back to markdown
   const mergedContent = allSections
     .map(section => section.content.join('\n'))
@@ -266,8 +334,8 @@ export function mergeTemplates(templates, contents) {
     .replace(/\n{4,}/g, '\n\n\n')
     .trim();
   
-  // Place header at the bottom instead of the top
-  return cleanedContent + '\n\n---\n\n' + header;
+  // Return content without any footer information
+  return cleanedContent;
 }
 
 /**
