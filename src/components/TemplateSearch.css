@@ -80,9 +80,10 @@
   left: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.25rem;
   color: var(--text-muted);
   pointer-events: none;
+  display: flex;
+  align-items: center;
 }
 
 .results-header {
@@ -142,7 +143,6 @@
 .preview-btn-icon {
   background: none;
   border: none;
-  font-size: 1.125rem;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -171,8 +171,8 @@
 
 .selected-indicator {
   color: var(--button-primary);
-  font-size: 1.25rem;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .template-card-meta {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { HeartIcon, EyeIcon, DownloadIcon, CopyIcon, CheckIcon } from './Icons';
 import './ExportHandler.css';
 
 /**
@@ -135,21 +136,37 @@ export function ExportHandler({ mergedContent, templates, stats, onClose }) {
                     className="action-btn preview-btn"
                     onClick={togglePreview}
                 >
-                    👁️ Preview Content
+                    <EyeIcon className="w-4 h-4 mr-2" /> Preview Content
                 </button>
 
                 <button
                     className={`action-btn download-btn ${downloadSuccess ? 'success' : ''}`}
                     onClick={downloadFile}
                 >
-                    {downloadSuccess ? '✅ Downloaded!' : '⬇️ Download File'}
+                    {downloadSuccess ? (
+                        <>
+                            <CheckIcon className="w-4 h-4 mr-2" /> Downloaded!
+                        </>
+                    ) : (
+                        <>
+                            <DownloadIcon className="w-4 h-4 mr-2" /> Download File
+                        </>
+                    )}
                 </button>
 
                 <button
                     className={`action-btn copy-btn ${copySuccess ? 'success' : ''}`}
                     onClick={copyToClipboard}
                 >
-                    {copySuccess ? '✅ Copied!' : '📋 Copy to Clipboard'}
+                    {copySuccess ? (
+                        <>
+                            <CheckIcon className="w-4 h-4 mr-2" /> Copied!
+                        </>
+                    ) : (
+                        <>
+                            <CopyIcon className="w-4 h-4 mr-2" /> Copy to Clipboard
+                        </>
+                    )}
                 </button>
             </div>
 
@@ -193,7 +210,7 @@ export function ExportHandler({ mergedContent, templates, stats, onClose }) {
                     </a>
                     <span className="footer-divider">•</span>
                     <span className="footer-text">
-                        Made with ❤️ for the GitHub Copilot community
+                        Made with <HeartIcon className="inline w-4 h-4 mx-1" /> for the GitHub Copilot community
                     </span>
                 </div>
             </footer>

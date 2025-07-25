@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTemplateContent } from '../hooks/useTemplateContent';
+import { SearchIcon, WarningIcon, CheckIcon, EyeIcon, XIcon } from './Icons';
 import './TemplateSearch.css';
 
 /**
@@ -74,7 +75,7 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
         return (
             <div className="search-container">
                 <div className="error-message">
-                    <h3>⚠️ Error Loading Templates</h3>
+                    <h3><WarningIcon className="inline w-5 h-5 mr-2" />Error Loading Templates</h3>
                     <p>{error}</p>
                     <p>Please check your internet connection and try again.</p>
                 </div>
@@ -100,7 +101,9 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
                     onChange={handleSearchChange}
                     disabled={loading}
                 />
-                <div className="search-icon">🔍</div>
+                <div className="search-icon">
+                    <SearchIcon className="w-5 h-5" />
+                </div>
             </div>
 
             <div className="search-results">
@@ -178,14 +181,13 @@ function TemplateCard({ template, isSelected, onClick, onPreview }) {
                         title={`Preview ${template.name}`}
                         aria-label={`Preview ${template.name}`}
                     >
-                        🔍
+                        <EyeIcon className="w-4 h-4" />
                     </button>
-                    {isSelected && <span className="selected-indicator">✓</span>}
+                    {isSelected && <span className="selected-indicator"><CheckIcon className="w-5 h-5" /></span>}
                 </div>
             </div>
             <div className="template-card-meta">
                 <span className="template-size">{formatFileSize(template.size)}</span>
-                <span className="template-type">.instructions.md</span>
             </div>
         </div>
     );
@@ -224,7 +226,7 @@ function PreviewModal({ template, content, loading, error, onClose }) {
                     )}
                     {error && (
                         <div className="preview-error">
-                            <p>❌ {error}</p>
+                            <p><XIcon className="inline w-4 h-4 mr-2" />{error}</p>
                         </div>
                     )}
                     {!loading && !error && content && (

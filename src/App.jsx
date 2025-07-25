@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { TemplateSearch } from './components/TemplateSearch';
 import { ExportHandler } from './components/ExportHandler';
 import ThemeToggle from './components/ThemeToggle';
+import { RocketIcon, WarningIcon, HeartIcon } from './components/Icons';
 import { useTemplates } from './hooks/useTemplates';
 import { useTemplateContent } from './hooks/useTemplateContent';
 import { mergeTemplates, generateMergeStats } from './services/templateMerger';
@@ -112,7 +113,10 @@ function App() {
                                     Generating Instructions...
                                 </>
                             ) : (
-                                '🚀 Generate Instructions'
+                                <>
+                                    <RocketIcon className="w-5 h-5" />
+                                    Generate Instructions
+                                </>
                             )}
                         </button>
                     </div>
@@ -131,7 +135,7 @@ function App() {
             {/* Generation Error */}
             {generateError && (
                 <div className="generation-error">
-                    <h3>⚠️ Generation Failed</h3>
+                    <h3><WarningIcon className="inline w-5 h-5 mr-2" />Generation Failed</h3>
                     <p>{generateError}</p>
                     <button onClick={() => setGenerateError(null)}>Dismiss</button>
                 </div>
@@ -181,7 +185,7 @@ function App() {
                     </a>
                     <span className="footer-divider">•</span>
                     <span className="footer-text">
-                        Made with ❤️ for the GitHub Copilot community
+                        Made with <HeartIcon className="inline w-4 h-4 mx-1" /> for the GitHub Copilot community
                     </span>
                 </div>
             </footer>
