@@ -111,8 +111,34 @@
   margin-bottom: 0.5rem;
 }
 
-.template-name {
+.template-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preview-btn-icon {
+  background: none;
+  border: none;
   font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-btn:hover {
+  background-color: var(--hover-background);
+  color: var(--text-color);
+  transform: scale(1.1);
+}
+
+.template-name {
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-color);
   margin: 0;
@@ -225,4 +251,113 @@
   .template-card {
     padding: 1rem;
   }
+}
+
+/* Preview Modal Styles */
+.preview-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.preview-modal {
+  background-color: var(--card-background);
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 900px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.preview-header h3 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.close-preview-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.close-preview-btn:hover {
+  background-color: var(--hover-background);
+  color: var(--text-color);
+}
+
+.preview-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1.5rem;
+  max-height: 60vh;
+}
+
+.preview-content pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  margin: 0;
+  background-color: var(--code-background);
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-color);
+}
+
+.preview-loading, .preview-error {
+  text-align: center;
+  padding: 2rem;
+}
+
+.preview-loading .loading-spinner {
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--button-primary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.preview-error {
+  color: var(--button-danger);
+}
+
+.preview-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.preview-footer p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
