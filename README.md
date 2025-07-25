@@ -4,7 +4,7 @@ A single-page web application that helps developers create customized `copilot-i
 
 ## 🚀 Live Demo
 
-Visit the live application: **[Copilot Instructions Generator](https://your-username.github.io/ghcp-instructions/)**
+Visit the live application: **[Copilot Instructions Generator](https://timheuer.github.io/ghcp-instructions/)**
 
 ## ✨ Features
 
@@ -53,7 +53,7 @@ The app dynamically fetches instruction templates from the awesome-copilot repos
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/ghcp-instructions.git
+git clone https://github.com/timheuer/ghcp-instructions.git
 cd ghcp-instructions
 
 # Install dependencies
