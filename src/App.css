@@ -294,6 +294,18 @@ body {
   font-weight: 500;
 }
 
+.source-link {
+  color: var(--button-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.source-link:hover {
+  color: var(--button-primary-hover);
+  text-decoration: underline;
+}
+
 /* Responsive footer */
 @media (max-width: 768px) {
   .footer-content {
