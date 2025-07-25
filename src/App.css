@@ -1,5 +1,80 @@
 /* App.css */
 
+/* CSS Custom Properties for Light/Dark Theme */
+:root {
+  /* Light theme (default) */
+  --background-color: #f7fafc;
+  --card-background: #ffffff;
+  --text-color: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --border-hover-color: #cbd5e0;
+  --hover-background: #f7fafc;
+  --focus-color: #4299e1;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  
+  /* Button colors */
+  --button-primary: #4299e1;
+  --button-primary-hover: #3182ce;
+  --button-success: #48bb78;
+  --button-success-hover: #38a169;
+  --button-warning: #ed8936;
+  --button-warning-hover: #dd6b20;
+  --button-danger: #e53e3e;
+  --button-danger-hover: #c53030;
+  --button-secondary: #718096;
+  --button-secondary-hover: #4a5568;
+  
+  /* Specific component colors */
+  --footer-background: #f7fafc;
+  --footer-border: #e2e8f0;
+  --export-background: #f7fafc;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --code-background: #f7fafc;
+  --template-tag-background: #e6fffa;
+  --template-tag-color: #285e61;
+  --template-tag-border: #b2f5ea;
+  --selected-background: white;
+}
+
+/* Dark theme */
+:root[data-theme="dark"], .dark {
+  --background-color: #121825;
+  --card-background: #1f2937;
+  --text-color: #f9fafb;
+  --text-secondary: #d1d5db;
+  --border-color: #374151;
+  --border-hover-color: #4b5563;
+  --hover-background: #374151;
+  --focus-color: #60a5fa;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-hover: rgba(0, 0, 0, 0.6);
+  
+  /* Button colors for dark theme */
+  --button-primary: #3b82f6;
+  --button-primary-hover: #2563eb;
+  --button-success: #10b981;
+  --button-success-hover: #059669;
+  --button-warning: #f59e0b;
+  --button-warning-hover: #d97706;
+  --button-danger: #ef4444;
+  --button-danger-hover: #dc2626;
+  --button-secondary: #6b7280;
+  --button-secondary-hover: #9ca3af;
+  
+  /* Specific component colors for dark theme */
+  --footer-background: #1f2937;
+  --footer-border: #374151;
+  --export-background: #1f2937;
+  --modal-overlay: rgba(0, 0, 0, 0.8);
+  --code-background: #111827;
+  --template-tag-background: #065f46;
+  --template-tag-color: #6ee7b7;
+  --template-tag-border: #059669;
+  --selected-background: #1f2937;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,8 +86,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7fafc;
+  background-color: var(--background-color);
+  color: var(--text-color);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app {
@@ -20,12 +97,13 @@ body {
 }
 
 .selected-templates-bar {
-  background-color: white;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--selected-background);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px var(--shadow-color);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .selected-templates-container {
@@ -36,7 +114,7 @@ body {
 
 .selected-templates-container h3 {
   margin: 0 0 1rem 0;
-  color: #2d3748;
+  color: var(--text-color);
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -51,12 +129,13 @@ body {
 .selected-template-tag {
   display: flex;
   align-items: center;
-  background-color: #4299e1;
+  background-color: var(--button-primary);
   color: white;
   padding: 0.5rem 0.75rem;
   border-radius: 1.5rem;
   font-size: 0.9rem;
   font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
 .selected-template-tag span {
@@ -85,7 +164,7 @@ body {
 }
 
 .generate-btn {
-  background-color: #48bb78;
+  background-color: var(--button-success);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -101,12 +180,12 @@ body {
 }
 
 .generate-btn:hover:not(:disabled) {
-  background-color: #38a169;
+  background-color: var(--button-success-hover);
   transform: translateY(-1px);
 }
 
 .generate-btn:disabled {
-  background-color: #a0aec0;
+  background-color: var(--button-secondary);
   cursor: not-allowed;
   transform: none;
 }
@@ -159,6 +238,73 @@ body {
 
 .generation-error button:hover {
   background-color: #9c2626;
+}
+
+/* Footer Styles */
+.app-footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--footer-border);
+  background-color: var(--footer-background);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.github-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.github-link:hover {
+  color: var(--text-color);
+  background-color: var(--hover-background);
+  transform: translateY(-1px);
+}
+
+.github-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.footer-divider {
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.footer-text {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Responsive footer */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .footer-divider {
+    display: none;
+  }
 }
 
 .error-actions {

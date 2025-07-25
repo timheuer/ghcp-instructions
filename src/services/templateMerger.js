@@ -18,7 +18,7 @@ Source templates: ${templateNames}
 Total templates merged: ${templates.length}
 
 Source repository: https://github.com/github/awesome-copilot/tree/main/instructions
-Generator: https://github.com/your-username/copilot-instructions-generator
+Generator: https://github.com/timheuer/ghcp-instructions
 -->
 
 # Copilot Instructions
@@ -214,6 +214,15 @@ export function mergeTemplates(templates, contents) {
   const header = generateHeader(templates);
   const allSections = [];
   
+  // Add main title section at the top
+  allSections.push({
+    level: 1,
+    title: 'Copilot Instructions',
+    content: ['# Copilot Instructions', '', 'This file contains merged instructions from multiple templates to provide comprehensive guidance for GitHub Copilot.', ''],
+    hash: 'copilot-instructions',
+    isMainTitle: true
+  });
+  
   // Process each template
   contents.forEach((content, index) => {
     const template = templates[index];
@@ -257,7 +266,8 @@ export function mergeTemplates(templates, contents) {
     .replace(/\n{4,}/g, '\n\n\n')
     .trim();
   
-  return header + '\n' + cleanedContent + '\n';
+  // Place header at the bottom instead of the top
+  return cleanedContent + '\n\n---\n\n' + header;
 }
 
 /**

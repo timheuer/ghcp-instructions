@@ -12,14 +12,14 @@
 }
 
 .search-header h1 {
-  color: #2d3748;
+  color: var(--text-color);
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .search-description {
-  color: #718096;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   margin: 0;
 }
@@ -36,22 +36,23 @@
   width: 100%;
   padding: 1rem 1rem 1rem 3rem;
   font-size: 1.1rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border-color);
   border-radius: 0.5rem;
-  background-color: white;
+  background-color: var(--card-background);
+  color: var(--text-color);
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #4299e1;
+  border-color: var(--focus-color);
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
 }
 
 .search-input:disabled {
-  background-color: #f7fafc;
-  color: #a0aec0;
+  background-color: var(--export-background);
+  color: var(--text-secondary);
   cursor: not-allowed;
 }
 
@@ -61,13 +62,13 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.2rem;
-  color: #a0aec0;
+  color: var(--text-secondary);
   pointer-events: none;
 }
 
 .results-header {
   margin-bottom: 1rem;
-  color: #4a5568;
+  color: var(--text-color);
   font-weight: 500;
 }
 
@@ -79,10 +80,10 @@
 }
 
 .template-card {
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border-color);
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background-color: white;
+  background-color: var(--card-background);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -113,13 +114,13 @@
 .template-name {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2d3748;
+  color: var(--text-color);
   margin: 0;
   word-break: break-word;
 }
 
 .selected-indicator {
-  color: #4299e1;
+  color: var(--button-primary);
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -128,12 +129,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #718096;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .template-size {
-  background-color: #f7fafc;
+  background-color: var(--export-background);
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   font-weight: 500;
@@ -170,10 +171,10 @@
 .error-message {
   text-align: center;
   padding: 3rem;
-  background-color: #fed7d7;
-  border: 1px solid #fc8181;
+  background-color: var(--button-danger);
+  border: 1px solid var(--button-danger-hover);
   border-radius: 0.5rem;
-  color: #c53030;
+  color: white;
 }
 
 .error-message h3 {
@@ -184,12 +185,13 @@
 .no-results {
   text-align: center;
   padding: 3rem;
-  color: #718096;
+  color: var(--text-secondary);
 }
 
 .no-results-hint {
   font-size: 0.9rem;
-  color: #a0aec0;
+  color: var(--text-secondary);
+  opacity: 0.8;
 }
 
 /* Responsive design */

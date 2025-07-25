@@ -1,0 +1,56 @@
+/* ThemeToggle.css */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background-color: var(--card-background);
+}
+
+.theme-toggle:hover {
+  background-color: var(--hover-background);
+  border-color: var(--border-hover-color);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.theme-label {
+  text-transform: capitalize;
+  font-size: 0.85rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .theme-toggle {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .theme-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+  
+  .theme-label {
+    font-size: 0.75rem;
+  }
+}
