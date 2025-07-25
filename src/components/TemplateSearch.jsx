@@ -178,7 +178,7 @@ function TemplateCard({ template, isSelected, onClick, onPreview }) {
                         title={`Preview ${template.name}`}
                         aria-label={`Preview ${template.name}`}
                     >
-                        👁️
+                        👁
                     </button>
                     {isSelected && <span className="selected-indicator">✓</span>}
                 </div>
