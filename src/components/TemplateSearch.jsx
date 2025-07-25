@@ -17,7 +17,7 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
     const [previewContent, setPreviewContent] = useState('');
     const [previewLoading, setPreviewLoading] = useState(false);
     const [previewError, setPreviewError] = useState(null);
-    
+
     const { fetchMultipleTemplateContents } = useTemplateContent();
 
     // Filter templates based on search term
@@ -52,7 +52,7 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
         setPreviewTemplate(template);
         setPreviewLoading(true);
         setPreviewError(null);
-        
+
         try {
             const contents = await fetchMultipleTemplateContents([template]);
             setPreviewContent(contents[0]);
@@ -172,13 +172,13 @@ function TemplateCard({ template, isSelected, onClick, onPreview }) {
             <div className="template-card-header">
                 <h3 className="template-name">{template.name}</h3>
                 <div className="template-card-actions">
-                    <button 
-                        className="preview-btn"
+                    <button
+                        className="preview-btn-icon"
                         onClick={handlePreviewClick}
                         title={`Preview ${template.name}`}
                         aria-label={`Preview ${template.name}`}
                     >
-                        👁
+                        🔍
                     </button>
                     {isSelected && <span className="selected-indicator">✓</span>}
                 </div>
