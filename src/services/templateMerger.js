@@ -209,7 +209,7 @@ function isDuplicateSection(section, existingSections) {
       );
       
       if (uniqueLines.length > 1) { // More than just the header
-        similarSection.content = [...similarSection.content, '', '<!-- Merged content -->', ...uniqueLines.slice(1)];
+        similarSection.content = [...similarSection.content, ...uniqueLines.slice(1)];
       }
       
       return true; // Mark as duplicate since we merged it
@@ -272,7 +272,7 @@ export function mergeTemplates(templates, contents) {
   allSections.push({
     level: 1,
     title: 'Copilot Instructions',
-    content: ['# Copilot Instructions', '', 'This file contains merged instructions from multiple templates to provide comprehensive guidance for GitHub Copilot.', ''],
+    content: ['# Copilot Instructions', '', '', ''],
     hash: 'copilot-instructions',
     isMainTitle: true
   });
@@ -300,7 +300,7 @@ export function mergeTemplates(templates, contents) {
     allSections.push({
       level: 2,
       title: `Instructions from: ${template.name}`,
-      content: [`## Instructions from: ${template.name}`, ''],
+      content: [''],
       hash: `instructions-from-${template.name.toLowerCase()}`,
       isTemplateHeader: true
     });
