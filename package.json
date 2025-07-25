@@ -1,0 +1,24 @@
+{
+  "name": "copilot-instructions-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A web app to generate custom copilot-instructions.md files from GitHub awesome-copilot templates",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["copilot", "github", "instructions", "templates", "react", "vite"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite": "^7.0.6"
+  }
+}
