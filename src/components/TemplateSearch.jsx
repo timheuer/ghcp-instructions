@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useTemplateContent } from '../hooks/useTemplateContent';
 import './TemplateSearch.css';
 
 /**
@@ -12,6 +13,12 @@ import './TemplateSearch.css';
  */
 export function TemplateSearch({ templates, onSelect, selectedTemplates, loading, error }) {
     const [searchTerm, setSearchTerm] = useState('');
+    const [previewTemplate, setPreviewTemplate] = useState(null);
+    const [previewContent, setPreviewContent] = useState('');
+    const [previewLoading, setPreviewLoading] = useState(false);
+    const [previewError, setPreviewError] = useState(null);
+    
+    const { fetchMultipleTemplateContents } = useTemplateContent();
 
     // Filter templates based on search term
     const filteredTemplates = useMemo(() => {
@@ -39,6 +46,28 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
+    };
+
+    const handlePreviewClick = async (template) => {
+        setPreviewTemplate(template);
+        setPreviewLoading(true);
+        setPreviewError(null);
+        
+        try {
+            const contents = await fetchMultipleTemplateContents([template]);
+            setPreviewContent(contents[0]);
+        } catch (error) {
+            console.error('Failed to fetch template content for preview:', error);
+            setPreviewError(`Failed to load template content: ${error.message}`);
+        } finally {
+            setPreviewLoading(false);
+        }
+    };
+
+    const closePreview = () => {
+        setPreviewTemplate(null);
+        setPreviewContent('');
+        setPreviewError(null);
     };
 
     if (error) {
@@ -97,6 +126,7 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
                                     template={template}
                                     isSelected={isTemplateSelected(template)}
                                     onClick={() => handleTemplateClick(template)}
+                                    onPreview={() => handlePreviewClick(template)}
                                 />
                             ))}
                         </div>
@@ -110,6 +140,17 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
                     </div>
                 )}
             </div>
+
+            {/* Preview Modal */}
+            {previewTemplate && (
+                <PreviewModal
+                    template={previewTemplate}
+                    content={previewContent}
+                    loading={previewLoading}
+                    error={previewError}
+                    onClose={closePreview}
+                />
+            )}
         </div>
     );
 }
@@ -117,7 +158,12 @@ export function TemplateSearch({ templates, onSelect, selectedTemplates, loading
 /**
  * TemplateCard component - Displays individual template information
  */
-function TemplateCard({ template, isSelected, onClick }) {
+function TemplateCard({ template, isSelected, onClick, onPreview }) {
+    const handlePreviewClick = (e) => {
+        e.stopPropagation(); // Prevent card selection when clicking preview
+        onPreview();
+    };
+
     return (
         <div
             className={`template-card ${isSelected ? 'selected' : ''}`}
@@ -125,7 +171,17 @@ function TemplateCard({ template, isSelected, onClick }) {
         >
             <div className="template-card-header">
                 <h3 className="template-name">{template.name}</h3>
-                {isSelected && <span className="selected-indicator">✓</span>}
+                <div className="template-card-actions">
+                    <button 
+                        className="preview-btn"
+                        onClick={handlePreviewClick}
+                        title={`Preview ${template.name}`}
+                        aria-label={`Preview ${template.name}`}
+                    >
+                        👁️
+                    </button>
+                    {isSelected && <span className="selected-indicator">✓</span>}
+                </div>
             </div>
             <div className="template-card-meta">
                 <span className="template-size">{formatFileSize(template.size)}</span>
@@ -146,4 +202,39 @@ function formatFileSize(bytes) {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+/**
+ * PreviewModal component - Shows a preview of individual template content
+ */
+function PreviewModal({ template, content, loading, error, onClose }) {
+    return (
+        <div className="preview-modal-overlay" onClick={onClose}>
+            <div className="preview-modal" onClick={e => e.stopPropagation()}>
+                <div className="preview-header">
+                    <h3>Preview: {template.name}</h3>
+                    <button className="close-preview-btn" onClick={onClose}>×</button>
+                </div>
+                <div className="preview-content">
+                    {loading && (
+                        <div className="preview-loading">
+                            <div className="loading-spinner"></div>
+                            <p>Loading template content...</p>
+                        </div>
+                    )}
+                    {error && (
+                        <div className="preview-error">
+                            <p>❌ {error}</p>
+                        </div>
+                    )}
+                    {!loading && !error && content && (
+                        <pre>{content}</pre>
+                    )}
+                </div>
+                <div className="preview-footer">
+                    <p>File: {template.fileName} • Size: {formatFileSize(template.size)}</p>
+                </div>
+            </div>
+        </div>
+    );
 }
