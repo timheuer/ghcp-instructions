@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTemplateContent } from '../hooks/useTemplateContent';
-import { SearchIcon, WarningIcon, CheckIcon, EyeIcon, XIcon } from './Icons';
+import { SearchIcon, WarningIcon, CheckIcon, EyeIcon, XIcon, GitIcon } from './Icons';
 import './TemplateSearch.css';
 
 /**
@@ -167,6 +167,12 @@ function TemplateCard({ template, isSelected, onClick, onPreview }) {
         onPreview();
     };
 
+    const handleContributeClick = (e) => {
+        e.stopPropagation(); // Prevent card selection when clicking contribute
+        const sourceUrl = getGitHubSourceUrl(template);
+        window.open(sourceUrl, '_blank', 'noopener,noreferrer');
+    };
+
     return (
         <div
             className={`template-card ${isSelected ? 'selected' : ''}`}
@@ -174,6 +180,10 @@ function TemplateCard({ template, isSelected, onClick, onPreview }) {
         >
             <div className="template-card-header">
                 <h3 className="template-name">{template.name}</h3>
+                {isSelected && <span className="selected-indicator"><CheckIcon className="w-5 h-5" /></span>}
+            </div>
+            <div className="template-card-meta">
+                <span className="template-size">{formatFileSize(template.size)}</span>
                 <div className="template-card-actions">
                     <button
                         className="preview-btn-icon"
@@ -183,11 +193,15 @@ function TemplateCard({ template, isSelected, onClick, onPreview }) {
                     >
                         <EyeIcon className="w-4 h-4" />
                     </button>
-                    {isSelected && <span className="selected-indicator"><CheckIcon className="w-5 h-5" /></span>}
+                    <button
+                        className="contribute-btn-icon"
+                        onClick={handleContributeClick}
+                        title="Contribute"
+                        aria-label={`Contribute to ${template.name}`}
+                    >
+                        <GitIcon className="w-4 h-4" />
+                    </button>
                 </div>
-            </div>
-            <div className="template-card-meta">
-                <span className="template-size">{formatFileSize(template.size)}</span>
             </div>
         </div>
     );
@@ -204,6 +218,13 @@ function formatFileSize(bytes) {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+/**
+ * Generate GitHub source URL for a template file
+ */
+function getGitHubSourceUrl(template) {
+    return `https://github.com/github/awesome-copilot/blob/main/instructions/${template.fileName}`;
 }
 
 /**

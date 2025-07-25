@@ -160,6 +160,26 @@
   transform: scale(1.05);
 }
 
+.contribute-btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hover-background);
+}
+
+.contribute-btn-icon:hover {
+  background: var(--border-color);
+  color: var(--text-color);
+  transform: scale(1.05);
+}
+
 .template-name {
   font-size: 1rem;
   font-weight: 600;
