@@ -3,8 +3,8 @@
 /* CSS Custom Properties for Light/Dark Theme */
 :root {
   /* Light theme (default) - Modern Design */
-  --background-color: #fafbfc;
-  --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --background-color: #f7f9fc;
+  --background-gradient: linear-gradient(135deg, #8b5cf6 0%, #14b8a6 100%);
   --card-background: #ffffff;
   --text-color: #1a202c;
   --text-secondary: #64748b;
@@ -20,6 +20,7 @@
   /* Modern Brand Colors */
   --primary-50: #eff6ff;
   --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
   --primary-500: #3b82f6;
   --primary-600: #2563eb;
   --primary-700: #1d4ed8;
@@ -36,8 +37,10 @@
   
   --danger-50: #fef2f2;
   --danger-100: #fee2e2;
+  --danger-200: #fecaca;
   --danger-500: #ef4444;
   --danger-600: #dc2626;
+  --danger-700: #b91c1c;
   
   /* Button colors */
   --button-primary: var(--primary-500);
@@ -67,7 +70,7 @@
 /* Dark theme */
 :root[data-theme="dark"], .dark {
   --background-color: #0f172a;
-  --background-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  --background-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   --card-background: #1e293b;
   --text-color: #f1f5f9;
   --text-secondary: #cbd5e1;
@@ -83,6 +86,7 @@
   /* Dark theme colors */
   --primary-50: #1e293b;
   --primary-100: #334155;
+  --primary-200: #475569;
   --primary-500: #60a5fa;
   --primary-600: #3b82f6;
   --primary-700: #2563eb;
@@ -99,8 +103,10 @@
   
   --danger-50: #450a0a;
   --danger-100: #7f1d1d;
+  --danger-200: #991b1b;
   --danger-500: #ef4444;
   --danger-600: #dc2626;
+  --danger-700: #b91c1c;
   
   /* Button colors for dark theme */
   --button-primary: var(--primary-500);
@@ -184,13 +190,31 @@ body {
   background: var(--background-color);
 }
 
+/* Animated colorful background accents */
+.app .app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 400px at 10% -10%, rgba(139,92,246,0.18), transparent 50%),
+    radial-gradient(1000px 300px at 90% -15%, rgba(20,184,166,0.16), transparent 55%),
+    radial-gradient(700px 200px at 50% 120%, rgba(59,130,246,0.14), transparent 60%);
+  animation: floatBg 18s ease-in-out infinite alternate;
+}
+
+@keyframes floatBg {
+  from { transform: translateY(0px); filter: saturate(110%); }
+  to { transform: translateY(-15px); filter: saturate(130%); }
+}
+
 .selected-templates-bar {
   background: var(--selected-background);
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -1px var(--shadow-color);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 120;
   transition: all 0.3s ease;
   backdrop-filter: blur(8px) saturate(180%);
 }

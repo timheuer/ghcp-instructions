@@ -203,7 +203,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: var(--modal-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,22 +212,23 @@
 }
 
 .preview-modal {
-  background-color: white;
-  border-radius: 0.5rem;
+  background: var(--card-background);
+  border-radius: 1rem;
   width: 100%;
   max-width: 900px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 50px -12px var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 .preview-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .preview-header h3 {
@@ -249,7 +250,7 @@
 }
 
 .close-preview-btn:hover {
-  background-color: var(--hover-background);
+  background: var(--hover-background);
   color: var(--text-color);
 }
 
@@ -268,9 +269,9 @@
   line-height: 1.5;
   color: var(--text-color);
   margin: 0;
-  background-color: var(--code-background);
+  background: var(--code-background);
   padding: 1rem;
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
   border: 1px solid var(--border-color);
 }
 
@@ -350,8 +351,8 @@
 .export-footer {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid #e2e8f0;
-  background-color: #f9fafb;
+  border-top: 1px solid var(--border-color);
+  background: var(--footer-background);
   margin-top: 2rem;
 }
 
@@ -369,7 +370,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #4a5568;
+  color: var(--text-secondary);
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -378,8 +379,8 @@
 }
 
 .github-link:hover {
-  color: #2d3748;
-  background-color: #e2e8f0;
+  color: var(--text-color);
+  background: var(--hover-background);
   transform: translateY(-1px);
 }
 
