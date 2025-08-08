@@ -10,6 +10,8 @@ lerna-debug.log*
 dist/
 build/
 *.local
+playwright-report/
+test-results/
 
 # Environment files
 .env

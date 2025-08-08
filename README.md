@@ -46,8 +46,6 @@ The app dynamically fetches instruction templates from the awesome-copilot repos
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
 
 ### Setup
 
@@ -64,6 +62,23 @@ npm run dev
 
 # Open browser to http://localhost:5173
 ```
+
+## End-to-end tests (Playwright)
+
+This project includes Playwright tests that mock GitHub API calls for fast, reliable runs.
+
+- Install browsers (first run only):
+	- `npm run pw:install`
+- Run all tests headless:
+	- `npm run test:e2e`
+- Run headed (see the browser):
+	- `npm run test:e2e:headed`
+- Open the Playwright UI:
+	- `npm run test:e2e:ui`
+- Show the last HTML report:
+	- `npm run test:e2e:report`
+
+The tests boot the Vite dev server automatically. To point tests at an already running server, set `PLAYWRIGHT_TEST_BASE_URL`.
 
 ### Build for Production
 
